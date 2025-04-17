@@ -61,7 +61,7 @@ public class SimpleProducerServicesImpl implements ProducerServices {
 		try {
 			// we are responsible for creating IDs, so replace whatever came in
 			// Note there are other ways to interpret this, but this is most RESTful
-			String newAbbreviation = __getNewAbbreviation();
+			final String newAbbreviation = __getNewAbbreviation();
 			if (newAbbreviation != null) {
 				p.setAbbreviation(newAbbreviation);
 			} else {
@@ -80,11 +80,11 @@ public class SimpleProducerServicesImpl implements ProducerServices {
 	@Override
 	public boolean update(Producer p) throws Exception {
 		try {
-			boolean rval = __producers.containsKey(p.getAbbreviation());
+			final boolean rval = __producers.containsKey(p.getAbbreviation());
 			// we are updating regardless of what rval is, we are writing anyway
 			// but it does affect the return status code and the id
 			if (!rval) {
-				String newAbbreviation = __getNewAbbreviation();
+				final String newAbbreviation = __getNewAbbreviation();
 				if (newAbbreviation != null) {
 					p.setAbbreviation(newAbbreviation);
 				} else {
@@ -105,7 +105,7 @@ public class SimpleProducerServicesImpl implements ProducerServices {
 	@Override
 	public boolean delete(String id) throws Exception {
 		try {
-			boolean rval = __producers.containsKey(id);
+			final boolean rval = __producers.containsKey(id);
 			if (rval) {
 				__producers.remove(id);
 			}
@@ -122,15 +122,15 @@ public class SimpleProducerServicesImpl implements ProducerServices {
 	private String __getNewAbbreviation() {
 		boolean rval = false;
 		//chose a Character random from this String
-		String AlphaString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		StringBuilder sb = new StringBuilder(4);
+		final String AlphaString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		final StringBuilder sb = new StringBuilder(4);
 
-		int numRetries = 0;
+		final int numRetries = 0;
 		while (!rval && numRetries < 10) {
 			for (int i = 0; i < 4; i++) {
 				//generate a random number between
 				//0 to AlphaNumericString variable length
-				int index = (int)(AlphaString.length() * Math.random());
+				final int index = (int)(AlphaString.length() * Math.random());
 				//add Character one by one in end of sb
 				sb.append(AlphaString.charAt(index));
 			}

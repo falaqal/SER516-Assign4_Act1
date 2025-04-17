@@ -43,13 +43,13 @@ public class ProducerController {
 	@SuppressWarnings("unused")
 	@PostMapping
 	public ResponseEntity<Producer> createProducer(@RequestBody Producer pItem) throws Exception {
-		String rval = __ProducerService.create(pItem);
-		URI location = ServletUriComponentsBuilder
+		final String rval = __ProducerService.create(pItem);
+		final URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(pItem.getAbbreviation())
                 .toUri();
-		HttpHeaders headers = new HttpHeaders();   // note this is the Spring type, not the java.net type
+		final HttpHeaders headers = new HttpHeaders();   // note this is the Spring type, not the java.net type
 		headers.set(HttpHeaders.LOCATION, location.toString());
 		// need to add rval to the Location header
 		return new ResponseEntity<Producer>(pItem, headers, HttpStatus.CREATED);
@@ -57,24 +57,24 @@ public class ProducerController {
 	// Note that this PUT example is a little different than the other example we have - why?
 	@PutMapping
 	public ResponseEntity<Producer> updateProducer(@RequestBody Producer pItem) throws Exception {
-		boolean rval = __ProducerService.update(pItem);
+		final boolean rval = __ProducerService.update(pItem);
 		// need to add id to the Location header if a create was done, and change the response status
 		if (rval) { // it was an update
 			return new ResponseEntity<Producer>(pItem, HttpStatus.OK);
 		} else {  // it was created
-			URI location = ServletUriComponentsBuilder
+			final URI location = ServletUriComponentsBuilder
 	                .fromCurrentRequest()
 	                .path("/{id}")
 	                .buildAndExpand(pItem.getAbbreviation())
 	                .toUri();
-			HttpHeaders headers = new HttpHeaders();   // note this is the Spring type, not the java.net type
+			final HttpHeaders headers = new HttpHeaders();   // note this is the Spring type, not the java.net type
 			headers.set(HttpHeaders.LOCATION, location.toString());
 			return new ResponseEntity<Producer>(pItem, headers, HttpStatus.CREATED);
 		}
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteProducer(@PathVariable("id") String id) throws Exception{
-		boolean rval = __ProducerService.delete(id);
+		final boolean rval = __ProducerService.delete(id);
 		// if true we return a 204, else we return a 404
 		if (!rval) {
 			// no such grocery item, return a 404

@@ -1,7 +1,6 @@
 package edu.asu.assign4.rest.grocery.services;
 
 import static java.lang.Class.forName;
-
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -19,10 +18,10 @@ public interface ProducerServices {
 	// normally we would implement a configurable logic to decide our service implementation
 	public static ProducerServices getProducerService() {
 		try {
-			String __theServiceImpl = "edu.asu.assign4.rest.grocery.services.impl.SimpleProducerServicesImpl";
+			final String __theServiceImpl = "edu.asu.assign4.rest.grocery.services.impl.SimpleProducerServicesImpl";
 			System.out.println("The service impl is " + __theServiceImpl);
-			Class<ProducerServices> implClass = (Class<ProducerServices>) forName(__theServiceImpl);
-			Method m = implClass.getMethod("getGroceriesService");
+			final Class<ProducerServices> implClass = (Class<ProducerServices>) forName(__theServiceImpl);
+			final Method m = implClass.getMethod("getGroceriesService");
 			return (ProducerServices) m.invoke(null); // invoking a static method
 		} catch (Throwable t) {
 			t.printStackTrace();

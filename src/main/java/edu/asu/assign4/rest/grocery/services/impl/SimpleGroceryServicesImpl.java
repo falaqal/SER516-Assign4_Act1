@@ -66,7 +66,7 @@ public class SimpleGroceryServicesImpl implements GroceryServices {
 		try {
 			// we are responsible for creating IDs, so replace whatever came in
 			// Note there are other ways to interpret this, but this is most RESTful
-			String newId = __getNewId();
+			final String newId = __getNewId();
 			if (newId != null) {
 				item.setId(newId);
 			} else {
@@ -85,12 +85,12 @@ public class SimpleGroceryServicesImpl implements GroceryServices {
 	@Override
 	public boolean update(GroceryItem item) throws Exception {
 		try {
-			boolean rval = __groceryItems.containsKey(item.getId());
+			final boolean rval = __groceryItems.containsKey(item.getId());
 			// we are updating regardless of what rval is, we are writing anyway
 			// but it does affect the return status code and the id
 			if (!rval) {
 				// this is a create so we have to find a new ID
-				String newId = __getNewId();
+				final String newId = __getNewId();
 				if (newId != null) {
 					item.setId(newId);
 				} else {
@@ -111,7 +111,7 @@ public class SimpleGroceryServicesImpl implements GroceryServices {
 	@Override
 	public boolean delete(String id) throws Exception {
 		try {
-			boolean rval = __groceryItems.containsKey(id);
+			final boolean rval = __groceryItems.containsKey(id);
 			if (rval) {
 				__groceryItems.remove(id);
 			}
@@ -133,15 +133,15 @@ public class SimpleGroceryServicesImpl implements GroceryServices {
 	private String __getNewId() {
 		boolean rval = false;
 		//chose a Character random from this String
-		String AlphaString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		StringBuilder sb = new StringBuilder(3);
+		final String AlphaString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		final StringBuilder sb = new StringBuilder(3);
 
-		int numRetries = 0;
+		final int numRetries = 0;
 		while (!rval && numRetries < 10) {
 			for (int i = 0; i < 3; i++) {
 				//generate a random number between
 				//0 to AlphaNumericString variable length
-				int index = (int)(AlphaString.length() * Math.random());
+				final int index = (int)(AlphaString.length() * Math.random());
 				//add Character one by one in end of sb
 				sb.append(AlphaString.charAt(index));
 			}
