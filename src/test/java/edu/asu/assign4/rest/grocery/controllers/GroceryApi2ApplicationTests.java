@@ -9,13 +9,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import edu.asu.assign4.rest.grocery.services.GroceryServices;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 @AutoConfigureMockMvc
 @SpringBootTest
 public class GroceryApi2ApplicationTests {
@@ -37,16 +36,16 @@ public class GroceryApi2ApplicationTests {
 	}
 	@Test
 	void getGroceryItemByIdExceptionTest() throws Exception {
-		MvcResult result =  mvc.perform(post("/api/groceries")
+		final MvcResult result =  mvc.perform(post("/api/groceries")
 				.content("{\"id\": \"MOZ\",\"item\": \"mozarella\",\"groceryType\": \"DAIRY\",\"price\": 6.55}")
 				.contentType(MediaType.APPLICATION_JSON) // Specify the content type
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isCreated())
 				.andReturn();
-		String responseBody = result.getResponse().getContentAsString();
+		final String responseBody = result.getResponse().getContentAsString();
 		System.out.println("Response Body: " + responseBody); // Optional for debugging
-		JSONObject jsonObject = new JSONObject(responseBody);
-		String id =  jsonObject.getString("id");
+		final JSONObject jsonObject = new JSONObject(responseBody);
+		final String id =  jsonObject.getString("id");
 
 		// testing if it was actually added
 		mvc.perform(get("/api/groceries/"+id))

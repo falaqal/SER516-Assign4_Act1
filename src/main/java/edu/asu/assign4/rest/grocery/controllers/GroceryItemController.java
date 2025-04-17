@@ -49,13 +49,13 @@ public class GroceryItemController {
 	@SuppressWarnings("unused")
 	@PostMapping
 	public ResponseEntity<GroceryItem> createGroceryItem(@RequestBody GroceryItem gItem) throws Exception {
-		String rval = __groceryService.create(gItem);
-		URI location = ServletUriComponentsBuilder
+		final String rval = __groceryService.create(gItem);
+		final URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(gItem.getId())
                 .toUri();
-		HttpHeaders headers = new HttpHeaders();   // note this is the Spring type, not the java.net type
+		final HttpHeaders headers = new HttpHeaders();   // note this is the Spring type, not the java.net type
 		headers.set(HttpHeaders.LOCATION, location.toString());
 		// need to add rval to the Location header
 		return new ResponseEntity<GroceryItem>(gItem, headers, HttpStatus.CREATED);
@@ -63,24 +63,24 @@ public class GroceryItemController {
 	// Note that this PUT example is a little different than the other example we have - why?
 	@PutMapping
 	public ResponseEntity<GroceryItem> updateGroceryItem(@RequestBody GroceryItem gItem) throws Exception {
-		boolean rval = __groceryService.update(gItem);
+		final boolean rval = __groceryService.update(gItem);
 		// need to add id to the Location header if a create was done, and change the response status
 		if (rval) { // it was an update
 			return new ResponseEntity<GroceryItem>(gItem, HttpStatus.OK);
 		} else {  // it was created
-			URI location = ServletUriComponentsBuilder
+			final URI location = ServletUriComponentsBuilder
 	                .fromCurrentRequest()
 	                .path("/{id}")
 	                .buildAndExpand(gItem.getId())
 	                .toUri();
-			HttpHeaders headers = new HttpHeaders();   // note this is the Spring type, not the java.net type
+			final HttpHeaders headers = new HttpHeaders();   // note this is the Spring type, not the java.net type
 			headers.set(HttpHeaders.LOCATION, location.toString());
 			return new ResponseEntity<GroceryItem>(gItem, headers, HttpStatus.CREATED);
 		}
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteGroceryItem(@PathVariable("id") String id) throws Exception{
-		boolean rval = __groceryService.delete(id);
+		final boolean rval = __groceryService.delete(id);
 		// if true we return a 204, else we return a 404
 		if (!rval) {
 			// no such grocery item, return a 404
